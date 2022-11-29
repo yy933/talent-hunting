@@ -13,16 +13,27 @@ h1 {
   text-shadow: 2px 2px 3px #999999;
 }
 
-h4 {
+.icon-title {
   color: #784E0B;
+  font-size: 1.5vw;
+  font-weight: bolder;
+}
+.icon-details{
+  font-size: 1vw;
 }
 
-#carousel-side {
+#carousel-container{
+  width: 100vw;
   background-image: linear-gradient(-180deg, #f5e5cd, white);
+}
+#carousel-side {
+  width: 60vw;
 }
 
 #carousel-main {
   position: relative;
+  width: 40vw;
+  height: 100%;
   display: inline-block;
 }
 
