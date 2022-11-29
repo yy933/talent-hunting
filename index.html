@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talent Hunting</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  </link>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+  </link>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://kit.fontawesome.com/bc5fe32e1b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!--  Navbar  -->
+  <nav class="navbar navbar-expand-lg sticky-top p-3" style="background-color:#a1855b; opacity: 0.9">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <h3>Talent Hunting</h3>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="favorite.html">Favorite</a>
+          </li>
+      </div>
+    </div>
+  </nav>
+  <!--   Carousel -->
+  <div class="container-fluid" id="carousel-container">
+    <div class="row">
+      <div class="col-xl-7 text-center" id="carousel-side" ">
+        <div class=" row" id="carousel-title">
+        <h1 class="fw-bold mt-5" style="font-family: Roboto; font-size: 65px; color: #784E0B;">Quick. Professional.
+          Hassle Free.</h1>
+        <h3 class="font-monospace fst-italic mt-3" style="color: #666666">Shortcut to Find the Best Candidate. </h3>
+      </div>
+      <!--       search bar -->
+      <div class="row" id="search-bar">
+        <form class="row row-cols-lg-3 g-3 ms-4 d-flex justify-content-center" id="search-form">
+          <div class="col-12">
+            <input class="form-control " type="search" style="font-family: Lora, FontAwesome; background-color: white;"
+              placeholder='&#xf002 Looking for a talent...' aria-label="Search" id="search-input">
+          </div>
+        </form>
+      </div>
+      <!--         icons -->
+      <div class="row" id="icons">
+        <div class="col-lg-4 mt-4 p-3">
+          <div><span style="color: #999999"><i class="fa-3x fa-solid fa-network-wired"></i></span></div>
+          <h4 class="mt-3">AI Matching</h4>
+          <p class="text-start">Our AI overlays skills and success profiles while targeting candidates’ workstyle
+            preferences. </p>
+        </div>
+        <div class="col-lg-4 mt-4 p-3">
+          <div><span style="color: #999999"><i class="fa-3x fa-solid fa-window-restore"></i></span></div>
+          <h4 class="mt-3">Easy Access</h4>
+          <p class="text-start">Get your job in front of millions of candidates. All with a single click.</p>
+        </div>
+        <div class="col-lg-4 mt-4 p-3">
+          <div><span style="color: #999999"><i class="fa-3x fa-solid fa-magnifying-glass-chart"></i></span></div>
+          <h4 class="mt-3">Transparent Hiring Process</h4>
+          <p class="text-start">We enable transparency in communication and expectations of both hiring companies and
+            job seekers.</p>
+        </div>
+      </div>
+    </div>
+    <!--       carousel main -->
+    <div class="col-xl-5" id="carousel-main" style="padding:0; opacity:0.8">
+      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="3000">
+            <img class="d-block"
+              src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+              class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img class="d-block"
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80"
+              class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img class="d-block"
+              src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+              class="d-block w-100" alt="...">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="row mt-3 ms-3">
+    <div class="d-flex justify-content-between">
+
+      <!--       Filtered by gender -->
+      <div class="row row-cols-lg-auto g-3 mb-2 me-4">
+        <div class="col-12"><select class="form-select form-select-sm" aria-label=".form-select-sm example">
+            <option selected>Filtered by gender</option>
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+          </select></div>
+      </div>
+    </div>
+  </div>
+
+  <!--  Main contents  -->
+  <div class="container-fluid mt-4 ms-4">
+    <!--   Render User Lists   -->
+    <div class="row justify-content-start" id="data-panel">
+
+
+    </div>
+  </div>
+  <!-- paginator -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <!--       render paginator -->
+    </ul>
+  </nav>
+  <!-- Modal -->
+  <div class="modal fade" id="user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-weight: bold;"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row" id="user-modal-image"></div>
+
+          <ul class="font-monospace" id="user-modal-details" style="list-style: none;font-size: large;">
+            <li class="mt-3" id="email"></li>
+            <li id="gender"></li>
+            <li id="age"></li>
+            <li id="region"></li>
+            <li id="birthday"></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

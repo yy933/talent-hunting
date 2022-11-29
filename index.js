@@ -1,0 +1,144 @@
+const BASE_URL = "https://lighthouse-user-api.herokuapp.com";
+const INDEX_URL = BASE_URL + "/api/v1/users/";
+const paginator = document.querySelector(".pagination")
+const users = [];
+
+// get data from index API
+axios
+  .get(INDEX_URL)
+  .then((response) => {
+    // array(200)
+    // console.log(response.data.results);
+    users.push(...response.data.results);
+    // console.log(users)
+    //render user list with users data
+    renderUserList(users);
+    renderPaginator(users.length)
+    renderUserList(getUsersByPage(1))
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+const data_panel = document.querySelector("#data-panel");
+//Render user list
+function renderUserList(data) {
+  let htmlContent = "";
+  data.forEach((item) => {
+    htmlContent += `
+   <div class="col-md-2  mx-3 my-3">
+        <div class="card w-100 h-100" style="width: 5vw" data-user-id="${item.id}">
+         <img src="${item.avatar}" class="card-img-top rounded img-fluid" id="avatar" alt="..." style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#user-modal" data-user-id="${item.id}">
+          <div class="card-body d-flex">
+            <div class="d-flex card-text flex-grow-1" style="width: 70%; font-size: 1vw;" data-user-id="${item.id}">${item.name} ${item.surname}</div>
+          <div class="me-0 d-flex" id="fav-button" style="width: 10%;"><button type="button" class="btn btn-outline-danger btn-sm m-1" id="save" data-bs-toggle="tooltip" data-bs-placement="top" title="Save" data-user-id="${item.id}"><i class="fa-regular fa-heart" id="save" data-user-id="${item.id}"></i></button></div>
+          </div>
+        </div>
+      </div>
+  `;
+  });
+  data_panel.innerHTML = htmlContent;
+}
+
+//Pop-up modal with user details
+function showUserModal(id) {
+  const modalTitle = document.querySelector(".modal-title");
+  const modalImage = document.querySelector("#user-modal-image");
+  const modalEmail = document.querySelector("#email");
+  const modalGender = document.querySelector("#gender");
+  const modalAge = document.querySelector("#age");
+  const modalRegion = document.querySelector("#region");
+  const modalBirthday = document.querySelector("#birthday");
+  // 先將 modal 內容清空，以免出現上一個 user 的資料殘影
+  modalTitle.innerText = "";
+  modalEmail.innerText = "";
+  modalGender.innerText = "";
+  modalAge.innerText = "";
+  modalRegion.innerText = "";
+  modalBirthday.innerText = "";
+  modalImage.innerHTML = "";
+
+  axios.get(INDEX_URL + id).then((response) => {
+    const data = response.data;
+    modalTitle.innerText = data.name + " " + data.surname;
+    modalEmail.innerText = "E-mail:" + " " + data.email;
+    modalGender.innerText = "Gender:" + " " + data.gender;
+    modalAge.innerText = "Age:" + " " + data.age;
+    modalRegion.innerText = "Region:" + " " + data.region;
+    modalBirthday.innerText = "Birthday:" + " " + data.birthday;
+    modalImage.innerHTML = ` <img src="${data.avatar}"  alt="user-avatar" class="rounded-circle mx-auto" style="max-width: 50%"> `;
+  });
+}
+
+// Listen to image
+data_panel.addEventListener("click", (event) => {
+  if (event.target.matches("#avatar")) {
+    showUserModal(event.target.dataset.userId);
+  } else if (event.target.matches("#save")) {
+    addToFavorite(Number(event.target.dataset.userId))
+  }
+});
+
+//Search 
+const searchForm = document.querySelector("#search-form")
+const searchInput = document.querySelector("#search-input")
+let filteredName = []
+
+//Listen to search form
+searchForm.addEventListener("keyup", function onSearchFormSubmitted(event) {
+  // event.preventDefault() 
+  const keyword = searchInput.value.trim().toLowerCase()
+  if (keyword.length === 0 || !keyword.length) {
+    renderUserList(getUsersByPage(1))
+  }
+  filteredName = users.filter(function (user) {
+    return (user.name + " " + user.surname).toLowerCase().includes(keyword)
+  })
+  if (filteredName.length === 0) {
+    return alert(`${keyword} is not in the list!`)
+  }
+  renderPaginator(filteredName.length)
+  renderUserList(getUsersByPage(1))
+})
+// prevent default when pressing enter key
+searchForm.addEventListener('submit', function (event) {
+  event.preventDefault()
+})
+//Add to favorite
+function addToFavorite(ID) {
+  const list = JSON.parse(localStorage.getItem('favoriteList')) || []
+  const friend = users.find(user => user.id === ID)
+  if (list.some(user => user.id === ID)) {
+    return alert(`User ${friend.name} ${friend.surname} is already in your favorite list!`)
+  }
+  list.push(friend)
+  localStorage.setItem('favoriteList', JSON.stringify(list))
+}
+
+//pagination
+const users_per_page = 30
+function getUsersByPage(page) {
+  const data = filteredName.length ? filteredName : users
+  const startIndex = (page - 1) * users_per_page
+
+  return data.slice(startIndex, startIndex + users_per_page)
+}
+
+// render paginator
+function renderPaginator(amount) {
+  const numberOfPages = Math.ceil(amount / users_per_page)
+  let rawHTML = ''
+  rawHTML += '<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+  for (let page = 1; page <= numberOfPages; page++) {
+    rawHTML += `<li class="page-item"><a class="page-link" href="#" data-page="${page}">${page}</a></li>`
+  }
+  rawHTML += '<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>'
+  paginator.innerHTML = rawHTML
+}
+//listen to paginator
+paginator.addEventListener("click", (event) => {
+  if (event.target.tagName !== 'A') return
+  const page = event.target.dataset.page
+  renderUserList(getUsersByPage(page))
+
+})
