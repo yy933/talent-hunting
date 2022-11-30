@@ -9,10 +9,16 @@ body {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-h1 {
+#carousel-side-title {
+  font-family: Roboto;
+  font-size: 3.5vw;
+  color: #784E0B;
   text-shadow: 2px 2px 3px #999999;
 }
-
+#carousel-side-subtitle{
+  font-size: 2vw;
+  color: #666666
+}
 .icon-title {
   color: #784E0B;
   font-size: 1.5vw;
