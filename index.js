@@ -99,11 +99,11 @@ function renderUserList(data) {
   data.forEach((item) => {
     htmlContent += `
    <div class="col-md-2  mx-3 my-3">
-        <div class="card w-100 h-100" style="width: 5vw" data-user-id="${item.id}">
+        <div class="card w-100 h-100" data-user-id="${item.id}">
          <img src="${item.avatar}" class="card-img-top rounded img-fluid" id="avatar" alt="..." style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#user-modal" data-user-id="${item.id}">
           <div class="card-body d-flex">
-            <div class="d-flex card-text flex-grow-1" style="width: 70%; font-size: 1vw;" data-user-id="${item.id}">${item.name} ${item.surname}</div>
-          <div class="me-0 d-flex" id="fav-button" style="width: 10%;"><button type="button" class="btn btn-outline-danger btn-sm m-1" id="save" data-bs-toggle="tooltip" data-bs-placement="top" title="Save" data-user-id="${item.id}"><i class="fa-regular fa-heart" id="save" data-user-id="${item.id}"></i></button></div>
+            <div class="card-text" data-user-id="${item.id}">${item.name} ${item.surname}</div>
+          <div class="me-0" id="fav-button"><button type="button" class="btn btn-outline-danger btn-sm m-1" id="save" data-bs-toggle="tooltip" data-bs-placement="top" title="Save" data-user-id="${item.id}"><i class="fa-regular fa-heart" id="save" data-user-id="${item.id}"></i></button></div>
           </div>
         </div>
       </div>
