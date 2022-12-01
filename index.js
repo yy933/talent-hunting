@@ -9,6 +9,7 @@ const searchInput = document.querySelector("#search-input")
 let filteredName = []
 const users_per_page = 30
 const genderList = document.querySelector("#filtered-by-gender")
+
 /// get data from index API
 axios
   .get(INDEX_URL)
@@ -19,6 +20,7 @@ axios
     // console.log(users)
     //render user list with users data
     renderUserList(users);
+    renderGenderFilter(users)
     renderPaginator(users.length)
     renderUserList(getUsersByPage(1))
   })
@@ -64,14 +66,16 @@ paginator.addEventListener("click", (event) => {
 
 ///Functions
 //Function: Render gender filter
-function renderGenderFilter(){
-  const selectedGender = users.map(user => {return user.gender})
-  const allGenderList = selectedGender.filter(function(element, index, arr){
-    return arr.indexOf(element) === index
+function renderGenderFilter(data){
+  const selectedGender = data.map(user => {return user.gender})
+  const allGenderList = selectedGender.filter(function(value, index, array){
+    return array.indexOf(value) === index
   })
-  const selectedGenderList = "<option selected>Filtered by gender</option>"
+  console.log(allGenderList)
+  let selectedGenderList = ""
+  selectedGenderList += `<option value="all">- Select gender -</option>`
   allGenderList.forEach((i) => {
-    selectedGenderList += ` <option value="${i.gender}">${i.gender}</option>`;
+    selectedGenderList += ` <option value="${i}">${i}</option>`;
   })
   genderList.innerHTML = selectedGenderList
 }
