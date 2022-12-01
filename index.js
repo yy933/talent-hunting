@@ -1,9 +1,15 @@
+///Variable declaration
 const BASE_URL = "https://lighthouse-user-api.herokuapp.com";
 const INDEX_URL = BASE_URL + "/api/v1/users/";
 const paginator = document.querySelector(".pagination")
 const users = [];
-
-// get data from index API
+const data_panel = document.querySelector("#data-panel");
+const searchForm = document.querySelector("#search-form")
+const searchInput = document.querySelector("#search-input")
+let filteredName = []
+const users_per_page = 30
+const genderList = document.querySelector("#filtered-by-gender")
+/// get data from index API
 axios
   .get(INDEX_URL)
   .then((response) => {
@@ -19,9 +25,57 @@ axios
   .catch((error) => {
     console.log(error);
   });
+///Eventlisteners
+// Listen to data panel
+data_panel.addEventListener("click", (event) => {
+  if (event.target.matches("#avatar")) {
+    showUserModal(event.target.dataset.userId);
+  } else if (event.target.matches("#save")) {
+    addToFavorite(Number(event.target.dataset.userId))
+  }
+});
+//Listen to search form
+searchForm.addEventListener("keyup", function onSearchFormSubmitted(event) {
+  // event.preventDefault() 
+  const keyword = searchInput.value.trim().toLowerCase()
+  if (keyword.length === 0 || !keyword.length) {
+    renderUserList(getUsersByPage(1))
+  }
+  filteredName = users.filter(function (user) {
+    return (user.name + " " + user.surname).toLowerCase().includes(keyword)
+  })
+  if (filteredName.length === 0) {
+    return alert(`${keyword} is not in the list!`)
+  }
+  renderPaginator(filteredName.length)
+  renderUserList(getUsersByPage(1))
+})
+// prevent default when pressing enter key
+searchForm.addEventListener('submit', function (event) {
+  event.preventDefault()
+})
+//listen to paginator
+paginator.addEventListener("click", (event) => {
+  if (event.target.tagName !== 'A') return
+  const page = event.target.dataset.page
+  renderUserList(getUsersByPage(page))
 
-const data_panel = document.querySelector("#data-panel");
-//Render user list
+})
+
+///Functions
+//Function: Render gender filter
+function renderGenderFilter(){
+  const selectedGender = users.map(user => {return user.gender})
+  const allGenderList = selectedGender.filter(function(element, index, arr){
+    return arr.indexOf(element) === index
+  })
+  const selectedGenderList = "<option selected>Filtered by gender</option>"
+  allGenderList.forEach((i) => {
+    selectedGenderList += ` <option value="${i.gender}">${i.gender}</option>`;
+  })
+  genderList.innerHTML = selectedGenderList
+}
+//Function: Render user list
 function renderUserList(data) {
   let htmlContent = "";
   data.forEach((item) => {
@@ -40,7 +94,7 @@ function renderUserList(data) {
   data_panel.innerHTML = htmlContent;
 }
 
-//Pop-up modal with user details
+//Function: Pop-up modal with user details
 function showUserModal(id) {
   const modalTitle = document.querySelector(".modal-title");
   const modalImage = document.querySelector("#user-modal-image");
@@ -70,41 +124,7 @@ function showUserModal(id) {
   });
 }
 
-// Listen to image
-data_panel.addEventListener("click", (event) => {
-  if (event.target.matches("#avatar")) {
-    showUserModal(event.target.dataset.userId);
-  } else if (event.target.matches("#save")) {
-    addToFavorite(Number(event.target.dataset.userId))
-  }
-});
-
-//Search 
-const searchForm = document.querySelector("#search-form")
-const searchInput = document.querySelector("#search-input")
-let filteredName = []
-
-//Listen to search form
-searchForm.addEventListener("keyup", function onSearchFormSubmitted(event) {
-  // event.preventDefault() 
-  const keyword = searchInput.value.trim().toLowerCase()
-  if (keyword.length === 0 || !keyword.length) {
-    renderUserList(getUsersByPage(1))
-  }
-  filteredName = users.filter(function (user) {
-    return (user.name + " " + user.surname).toLowerCase().includes(keyword)
-  })
-  if (filteredName.length === 0) {
-    return alert(`${keyword} is not in the list!`)
-  }
-  renderPaginator(filteredName.length)
-  renderUserList(getUsersByPage(1))
-})
-// prevent default when pressing enter key
-searchForm.addEventListener('submit', function (event) {
-  event.preventDefault()
-})
-//Add to favorite
+//Function: Add to favorite
 function addToFavorite(ID) {
   const list = JSON.parse(localStorage.getItem('favoriteList')) || []
   const friend = users.find(user => user.id === ID)
@@ -115,16 +135,14 @@ function addToFavorite(ID) {
   localStorage.setItem('favoriteList', JSON.stringify(list))
 }
 
-//pagination
-const users_per_page = 30
+//Function: slice data
 function getUsersByPage(page) {
   const data = filteredName.length ? filteredName : users
   const startIndex = (page - 1) * users_per_page
-
   return data.slice(startIndex, startIndex + users_per_page)
 }
 
-// render paginator
+// Function: render paginator
 function renderPaginator(amount) {
   const numberOfPages = Math.ceil(amount / users_per_page)
   let rawHTML = ''
@@ -135,10 +153,3 @@ function renderPaginator(amount) {
   rawHTML += '<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>'
   paginator.innerHTML = rawHTML
 }
-//listen to paginator
-paginator.addEventListener("click", (event) => {
-  if (event.target.tagName !== 'A') return
-  const page = event.target.dataset.page
-  renderUserList(getUsersByPage(page))
-
-})
