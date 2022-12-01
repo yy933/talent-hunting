@@ -6,9 +6,10 @@ const users = [];
 const data_panel = document.querySelector("#data-panel");
 const searchForm = document.querySelector("#search-form")
 const searchInput = document.querySelector("#search-input")
+const genderList = document.querySelector("#filtered-by-gender")
 let filteredName = []
 const users_per_page = 30
-const genderList = document.querySelector("#filtered-by-gender")
+
 
 /// get data from index API
 axios
@@ -36,6 +37,10 @@ data_panel.addEventListener("click", (event) => {
     addToFavorite(Number(event.target.dataset.userId))
   }
 });
+//Listen to gender select
+genderList.addEventListener("change", function (event) {
+  selectGender(event.target.value)
+})
 //Listen to search form
 searchForm.addEventListener("keyup", function onSearchFormSubmitted(event) {
   // event.preventDefault() 
@@ -68,6 +73,7 @@ paginator.addEventListener("click", (event) => {
 //Function: Render gender filter
 function renderGenderFilter(data){
   const selectedGender = data.map(user => {return user.gender})
+  // remove duplicate
   const allGenderList = selectedGender.filter(function(value, index, array){
     return array.indexOf(value) === index
   })
@@ -79,6 +85,14 @@ function renderGenderFilter(data){
   })
   genderList.innerHTML = selectedGenderList
 }
+// Function: Select gender
+function selectGender(gender){
+  filteredName = gender === 'all' ? users : users.filter(item => item.gender === gender);
+  renderPaginator(filteredName.length)
+  renderUserList(getUsersByPage(1))
+}
+
+
 //Function: Render user list
 function renderUserList(data) {
   let htmlContent = "";
@@ -141,7 +155,7 @@ function addToFavorite(ID) {
 
 //Function: slice data
 function getUsersByPage(page) {
-  const data = filteredName.length ? filteredName : users
+  let data = filteredName.length ? filteredName : users
   const startIndex = (page - 1) * users_per_page
   return data.slice(startIndex, startIndex + users_per_page)
 }
