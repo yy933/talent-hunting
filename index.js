@@ -9,7 +9,8 @@ const searchInput = document.querySelector("#search-input")
 const genderList = document.querySelector("#filtered-by-gender")
 let filteredName = []
 const users_per_page = 30
-
+let totalPage; 
+let currentPage = 1;
 
 /// get data from index API
 axios
@@ -24,6 +25,7 @@ axios
     renderGenderFilter(users)
     renderPaginator(users.length)
     renderUserList(getUsersByPage(1))
+    pageActiveStatus("1")
   })
   .catch((error) => {
     console.log(error);
@@ -62,12 +64,7 @@ searchForm.addEventListener('submit', function (event) {
   event.preventDefault()
 })
 //listen to paginator
-paginator.addEventListener("click", (event) => {
-  if (event.target.tagName !== 'A') return
-  const page = event.target.dataset.page
-  renderUserList(getUsersByPage(page))
-
-})
+paginator.addEventListener("click", pageChange)
 
 ///Functions
 //Function: Render gender filter
@@ -90,6 +87,7 @@ function selectGender(gender){
   filteredName = gender === 'all' ? users : users.filter(item => item.gender === gender);
   renderPaginator(filteredName.length)
   renderUserList(getUsersByPage(1))
+  pageActiveStatus("1")
 }
 
 
@@ -162,12 +160,39 @@ function getUsersByPage(page) {
 
 // Function: render paginator
 function renderPaginator(amount) {
-  const numberOfPages = Math.ceil(amount / users_per_page)
+  totalPage = Math.ceil(amount / users_per_page)
   let rawHTML = ''
-  rawHTML += '<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
-  for (let page = 1; page <= numberOfPages; page++) {
-    rawHTML += `<li class="page-item"><a class="page-link" href="#" data-page="${page}">${page}</a></li>`
+  
+  for (let page = 1; page <= totalPage; page++) {
+    rawHTML += `<li class="page-item"><a class="page-link page-number" data-page="${page}">${page}</a></li>`
   }
-  rawHTML += '<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>'
   paginator.innerHTML = rawHTML
+  
 }
+// Function: change page
+function pageChange(event){
+  const page = event.target.dataset.page
+  currentPage = 1
+  if (event.target.tagName !== 'A') return
+  if (event.target.classList.contains("page-number")){
+    renderUserList(getUsersByPage(page))
+    pageActiveStatus(page)
+  }
+}
+//Function: active page
+function pageActiveStatus(Page){
+  //active status
+  let activePage = document.querySelectorAll(".active");
+  if (activePage) {
+    activePage.forEach((item) => {
+      item.classList.remove("active");
+    });
+  }
+  let clickPage = document.querySelectorAll(".page-number")
+  clickPage.forEach((item)=>{
+    if (item.dataset.page === Page){
+       item.parentElement.classList.add("active")
+    }
+  })
+}
+
