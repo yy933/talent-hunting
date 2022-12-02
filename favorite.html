@@ -39,18 +39,18 @@
       </div>
     </div>
   </nav>
-  <div class="row mt-3 ms-3">
-    <div class="d-flex justify-content-between">
+  <div class="row mt-3">
+    <div class="d-flex px-3 justify-content-between">
       <!--   search bar -->
-      <form class="row row-cols-lg-auto g-3 mb-2 ms-4" id="search-form">
+      <form class="row row-cols-lg-3 g-3 ms-4 d-flex justify-content-start" id="search-form">
         <div class="col-12">
-          <input class="form-control " type="search" style="font-family: Lora, FontAwesome; background-color: #F4E2C5;"
+          <input class="form-control" id="search-input" type="search" style="font-family: Lora, FontAwesome; background-color: white;"
             placeholder='&#xf002 Looking for a talent...' aria-label="Search" id="search-input">
         </div>
       </form>
       <!--        filtered by gender -->
       <div class="row row-cols-lg-auto g-3 mb-2 me-4">
-        <div class="col-12"><select class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <div class="col-12"><select class="form-select form-select-sm" id="filtered-by-gender" aria-label=".form-select-sm example">
             <option selected>Filtered by gender</option>
             <option value="1">Male</option>
             <option value="2">Female</option>
@@ -69,7 +69,7 @@
   <!-- paginator -->
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-      <li class="page-item">
+      <!-- <li class="page-item">
         <a class="page-link" href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
@@ -81,7 +81,7 @@
         <a class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
-      </li>
+      </li> -->
     </ul>
   </nav>
   <!-- Modal -->
